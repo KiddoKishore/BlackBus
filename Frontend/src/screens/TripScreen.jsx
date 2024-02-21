@@ -9,6 +9,7 @@ import { RiSteering2Fill } from "react-icons/ri";
 import { addPassenger } from '../slices/passengerSlice';
 import Payment from '../components/Payment';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Loader from '../components/Loader';
 
 const TripScreen = () => {
     const { id } = useParams();
@@ -65,7 +66,7 @@ const TripScreen = () => {
             <div key={index} className='m-5 bg-red-500 p-2 rounded-lg'>
                 <div className='flex justify-between text-white'>
                     <h2 className='m-3'>Passenger {index + 1}</h2>
-                    <h2 className='w-12 h-10 bg-white text-black text-center p-2 m-3 rounded-full'>{seat + 1}</h2>
+                    <h2 className='w-12 h-10 bg-white text-black text-center p-2 m-3 rounded-full'>S{seat + 1}</h2>
                 </div>
                 <div className='flex flex-wrap'>
                     <TextField 
@@ -127,9 +128,15 @@ const TripScreen = () => {
 
     return (
         <div>
+            <Link to={'/'}>
+                <Button variant="outlined" type='button' className='m-5 bg-black' sx={{color: 'white', borderColor: 'black', '&:hover': {
+                borderColor: 'white',
+                backgroundColor: 'gray',
+                }}}><ArrowBackIcon />Go Back</Button>
+            </Link>
             {loading ? (
                 <div>
-                    <h1>Loading...</h1>
+                    <h1><Loader /></h1>
                 </div>
             ) : data ? ( seat ? (
                 <div className='flex flex-wrap'>
