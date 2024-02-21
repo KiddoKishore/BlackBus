@@ -82,7 +82,7 @@ const ViewTicketScreen = () => {
         </div>
         { ticket && ticket.isBooked ? (
             <div className='flex justify-center'>
-                <Button type='button' onClick={submitHandler} className='bg-black text-white hover:bg-gray-500'>Cancel Ticket</Button>
+                <Button type='button' onClick={submitHandler} className='bg-red-600 text-white hover:bg-black'>Cancel Ticket</Button>
             </div>
         ) : (
             <> 
