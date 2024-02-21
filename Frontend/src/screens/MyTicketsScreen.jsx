@@ -15,10 +15,13 @@ const MyTicketsScreen = () => {
         dispatch(getTicket(ticket));
     };
 
+    // Create a copy of the tickets array and then reverse it
+    const reversedTickets = tickets ? [...tickets].reverse() : [];
+
     return (
         <div className='flex flex-wrap'>
             {
-                tickets && tickets.map((ticket) => (
+                reversedTickets.map((ticket) => (
                     <Card key={ticket._id} className={`m-5 w-96 p-3 ${ ticket.isBooked ? 'bg-green-400/75' : 'bg-red-400/75'}`}>
                         <div className='flex justify-between'>
                             <span><h2>{ticket.origin}</h2><h3>{ticket.departureTime}</h3></span>
