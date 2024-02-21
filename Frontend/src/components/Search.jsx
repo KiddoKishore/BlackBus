@@ -74,7 +74,8 @@ const Search = () => {
         <input className=" px-4 py-2 border-b border-black outline-none  sm:block focus:border-blue-900 focus:border-b-2 mx-2 placeholder:text-black" type="text"
          value={from} 
          onChange={(e) => setFrom(e.target.value)}
-         placeholder="From" />
+         placeholder="From"
+         required />
         {/* <TextField
           id="outlined-required"
           label="To"

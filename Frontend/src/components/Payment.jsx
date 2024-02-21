@@ -36,7 +36,7 @@ const Payment = () => {
             <div>
                 <h2 className='m-3'><b>Passengers :</b></h2>
                 {passengers && passengers.passengers.map((passenger) => (
-                    <h3 key={passenger.id} className='m-3'>{passenger.name} - {passenger.seatNo}</h3>
+                    <h3 key={passenger.id} className='m-3'>{passenger.name} - S{passenger.seatNo}</h3>
                 ))}
             </div>
             <h1 className='m-3'><b>Total Price</b> - {`${selectedTrip.price} * ${passengers.passengers.length} = ${selectedTrip.price * passengers.passengers.length}`}</h1>
