@@ -5,7 +5,6 @@ import './index.css';
 import { StyledEngineProvider } from '@mui/material'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen';
-import HelpScreen from './screens/HelpScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import LoginScreen from './screens/LoginScreen';
 import store from './store';
@@ -19,7 +18,6 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />} >
       <Route index={true} path='/' element={<HomeScreen />} />
-      <Route path='/help' element={<HelpScreen />} />
       <Route path='/login' element={<LoginScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
       <Route path='' element={<PrivateRoute />}>
