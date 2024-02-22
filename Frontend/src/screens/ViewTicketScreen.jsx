@@ -1,15 +1,11 @@
 import React from 'react'
 import { Container, Card, Button } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
 import { useCancelMutation, useGetTicketQuery } from '../slices/userApiSlice';
-import { useParams } from 'react-router-dom';
-import { getTicket } from '../slices/tripSlice';
+import { useParams, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const ViewTicketScreen = () => {
-    // const { ticket } = useSelector((state) => state.trip)
-    const dispatch = useDispatch();
-    // console.log(ticket)
     const { id } = useParams();
     const [ cancel ] = useCancelMutation();
     const { data: ticket, isLoading, refetch } = useGetTicketQuery(id);
@@ -21,9 +17,11 @@ const ViewTicketScreen = () => {
         try {
             const res = await cancel(id);
             console.log(res)
-            // dispatch(getTicket({...res}))
-            toast.success('Ticket Cancelled');
-            refetch();
+            const result = confirm("Are you sure! Do you want to Cancel this Ticket")
+            if (result === true){
+                toast.success('Ticket Cancelled');
+                refetch();
+            }
         } catch (err) {
             console.log(err);
             toast.error(err?.data?.message || err.error)
@@ -32,11 +30,19 @@ const ViewTicketScreen = () => {
   return (
     <Container>
         { isLoading && <h1>Loading...</h1>}
+
+        <Link to={'/tickets'}>
+            <Button variant="outlined" type='button' className='m-5 bg-black' sx={{color: 'white', borderColor: 'black', '&:hover': {
+            borderColor: 'white',
+            backgroundColor: 'gray',
+            }}}><ArrowBackIcon />Go Back</Button>
+        </Link>
+
         <div className='flex justify-center font-mono'>
             { ticket && (
                 <Card className='m-5 w-96 text-center'>
-                <div className={`${ticket.isBooked ? 'bg-green-400' : 'bg-red-500'} w-full flex justify-center p-3`}>
-                    <h1>{ticket.isBooked ? 'Booked' : 'Canceled'}</h1>
+                <div className={`${ticket.isBooked ? ticket.date.slice(0, 10) < new Date().toISOString().slice(0, 10) ? 'bg-yellow-400' : 'bg-green-400' : 'bg-red-500'} w-full flex justify-center p-3`}>
+                    <h1>{ticket.isBooked ? ticket.date.slice(0, 10) < new Date().toISOString().slice(0, 10) ? 'Expired' : 'Booked' : 'Canceled'}</h1>
                 </div>
                 <h1 className='p-2'>{ticket.origin} - {ticket.destination}</h1>
                 <h2 className='p-2'>{ticket.departureTime} - {ticket.arrivalTime}</h2>
@@ -80,10 +86,14 @@ const ViewTicketScreen = () => {
             </Card>
             )}
         </div>
-        { ticket && ticket.isBooked ? (
-            <div className='flex justify-center'>
+        { ticket && ticket.isBooked ? ( 
+            ticket.date.slice(0, 10) > new Date().toISOString().slice(0, 10) ? (
+                <div className='flex justify-center'>
                 <Button type='button' onClick={submitHandler} className='bg-red-600 text-white hover:bg-black'>Cancel Ticket</Button>
             </div>
+            ) : (
+                <></>
+            )
         ) : (
             <> 
             </>
