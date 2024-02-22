@@ -43,21 +43,21 @@ const TripScreen = () => {
         },
       });
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await axios.get(`${BASE_URL}/api/trips/${id}`);
-                const tripData = res.data;
-                setData(tripData);
-                setNo(tripData.bookedSeats.length + tripData.availableSeats);
-                dispatch(selectTrip(tripData));
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching trip:', error);
-                setLoading(false);
-            }
-        };
+    const fetchData = async () => {
+        try {
+            const res = await axios.get(`${BASE_URL}/api/trips/${id}`);
+            const tripData = res.data;
+            setData(tripData);
+            setNo(tripData.bookedSeats.length + tripData.availableSeats);
+            dispatch(selectTrip(tripData));
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching trip:', error);
+            setLoading(false);
+        }
+    };
 
+    useEffect(() => {
         fetchData();
     }, [dispatch, id]);
 
@@ -126,23 +126,33 @@ const TripScreen = () => {
         setSeat(false)
     };
 
+    const handleGoToSeats = () => {
+        fetchData();
+        setSeat(true);
+        setSelectedSeats([])
+    };
+
     return (
         <div>
-            <Link to={'/'}>
-                <Button variant="outlined" type='button' className='m-5 bg-black' sx={{color: 'white', borderColor: 'black', '&:hover': {
-                borderColor: 'white',
-                backgroundColor: 'gray',
-                }}}><ArrowBackIcon />Go Back</Button>
-            </Link>
+            { seat && 
+                <Link to={'/'}>
+                    <Button variant="outlined" type='button' className='m-5 bg-black' sx={{color: 'white', borderColor: 'black', '&:hover': {
+                    borderColor: 'white',
+                    backgroundColor: 'gray',
+                    }}}><ArrowBackIcon />Go Back</Button>
+                </Link>
+            }
             {loading ? (
                 <div>
                     <h1><Loader /></h1>
                 </div>
             ) : data ? ( seat ? (
-                <div className='flex flex-wrap'>
+                <div className='flex flex-wrap justify-center'>
                     <Card className='m-10 mb-16 w-72 p-2 grid'>
-                    <RiSteering2Fill className='text-3xl m-2 justify-self-end mx-6'/>
-                        <div className="grid grid-cols-3">
+                        <div className='text-3xl m-2 justify-self-end mx-6'>
+                            <RiSteering2Fill />
+                        </div>
+                        <div className="grid grid-cols-3 border-t-2 border-black">
                             {Array.from({ length: no }).map((_, index) => (
                                 <div key={index} 
                                     className={`w-10 h-12 m-3 mx-6 flex items-center justify-center 
@@ -171,8 +181,8 @@ const TripScreen = () => {
                 </div>
             ) : (
                 <Container>
-                    <Card className='p-5'>
-                        <Button variant="contained" className='bg-black hover:bg-gray-400 m-3' onClick={() => setSeat(true)}><ArrowBackIcon />Go to Seats</Button>
+                    <Card className='p-5 m-10'>
+                        <Button variant="contained" className='bg-black hover:bg-gray-400 m-3' onClick={handleGoToSeats}><ArrowBackIcon />Go to Seats</Button>
                         <Payment />
                     </Card>
                 </Container>
