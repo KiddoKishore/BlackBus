@@ -10,12 +10,14 @@ import 'react-toastify/dist/ReactToastify.css';
 const App = () => {
   return (
     <>
-      <img src={BlackBus} alt='Black-Bus'className='fixed w-full -z-10'/>
-      <Header />
-      <main>
+      <div style={{ position: 'relative', minHeight: '100vh' }}>
+        <img src={BlackBus} alt='Black-Bus' className='fixed w-full -z-10'/>
+        <Header />
+        <main style={{ paddingBottom: '100px' }}>
           <Outlet />
-      </main>
-      <Footer />
+        </main>
+        <Footer style={{ position: 'absolute', bottom: 0, width: '100%' }} />
+      </div>
       <ToastContainer />
     </>
   );
