@@ -60,7 +60,7 @@ const Search = () => {
 
   return (
     <div className='flex justify-center'>
-      <form className="flex flex-col lg:flex-row shadow-xl mt-28 w-auto justify-center p-5 rounded-lg bg-white" onSubmit={submitHandler}>
+      <form className="flex flex-col lg:flex-row shadow-xl mt-10 md:mt-28 w-auto justify-center p-5 rounded-lg bg-white" onSubmit={submitHandler}>
         {/* <TextField
           id="outlined-required"
           label="From"
