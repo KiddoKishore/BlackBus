@@ -22,20 +22,10 @@ export default function Header() {
       <Toolbar className="flex justify-between">
         <Typography variant="h6" className="text-white cursor-pointer ml-[5%]">
           <Link href='/' underline='none'>
-            <img src={logo} alt='logo' className='md:w-[10%] w-[20%] m-2'/>
+            <img src={logo} alt='logo' className='md:w-[10%] w-[40%] m-2'/>
           </Link>
         </Typography>
-        <div className='flex mr-[5%]'>
-          <Link href='/help' underline='none' color='white'>
-          <Button color="inherit" className="m-4">
-            <Tooltip title='Customer Support'>
-            <div>
-              <ContactSupportOutlined />
-              Help
-            </div>
-            </Tooltip>
-          </Button>
-          </Link>
+        <div className='flex md:mx-10 mx-3'>
           <Button color="inherit" className="m-4">
             { userInfo ? (
               <>
