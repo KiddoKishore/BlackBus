@@ -6,10 +6,18 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const MyTicketsScreen = () => {
-    const { data: tickets } = useTicketsQuery();
+    const { data: tickets, isError, error } = useTicketsQuery();
     const dispatch = useDispatch();
 
-    console.log(tickets);
+    console.log(isError);
+
+    if (isError){
+        return (
+            <>
+                <h1>{error?.data?.message}</h1>
+            </>
+        )
+    }
 
     const handleViewTicket = (ticket) => {
         dispatch(getTicket(ticket));
